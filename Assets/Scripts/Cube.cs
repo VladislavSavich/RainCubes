@@ -32,16 +32,6 @@ public class Cube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (IsTouched == false) 
-        {
-            if (collision.gameObject.CompareTag("Plane")) 
-            {
-                ChangeColor();
-                StartCoroutine(DetermineLifetime());
-                IsTouched = true;
-            }
-        }
-
         if (IsTouched != true && collision.gameObject.CompareTag("Plane")) 
         {
             IsTouched = true;
