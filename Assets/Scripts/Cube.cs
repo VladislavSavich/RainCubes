@@ -19,9 +19,9 @@ public class Cube : MonoBehaviour
 
     private void Awake()
     {
+        IsTouched = false;
         _renderer = GetComponent<Renderer>();
         Collider = GetComponent<BoxCollider>();
-        IsTouched = false;
     }
 
     private void Start()
@@ -52,5 +52,11 @@ public class Cube : MonoBehaviour
         yield return wait;
 
         CubeFallenDown?.Invoke(this);
+    }
+
+    public void ResetCondition()
+    {
+        _renderer.material.color = DefaultColor;
+        IsTouched = false;
     }
 }

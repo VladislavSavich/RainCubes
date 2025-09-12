@@ -8,8 +8,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Cube _cubePrefab;
 
     private ObjectPool<Cube> _pool;
-    private int _poolCapacity = 5;
-    private int _poolMaxSize = 5;
+    private int _poolCapacity = 10;
+    private int _poolMaxSize = 10;
     private float _repeatRate = 1f;
     private Vector3 _maximumSpawnCoordinates = new Vector3(50, 30, 50);
     private Vector3 _minimumSpawnCoordinates = new Vector3(20, 25, 20);
@@ -55,6 +55,7 @@ public class Spawner : MonoBehaviour
     {
         cube.CubeFallenDown -= ReleaseCube;
         _pool.Release(cube);
+        cube.Reset—ondition();
     }
 
     private Vector3 GenerateRandomPosition() 
