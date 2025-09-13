@@ -40,9 +40,11 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnCubes()
     {
+        var wait = new WaitForSeconds(_repeatRate);
+
         while (enabled)
         {
-            yield return new WaitForSeconds(_repeatRate);
+            yield return wait;
 
             if (_pool.CountActive < _poolMaxSize)
             {

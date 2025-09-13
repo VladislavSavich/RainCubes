@@ -23,22 +23,31 @@ public class Cube : MonoBehaviour
         IsTouched = false;
         _renderer = GetComponent<Renderer>();
         Collider = GetComponent<BoxCollider>();
+        Rigidbody = GetComponent<Rigidbody>();
+
     }
 
     private void Start()
     {
-        Rigidbody = GetComponent<Rigidbody>();
         _renderer.material.color = _defaultColor;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (IsTouched != true && collision.gameObject.CompareTag("Plane"))
+        if (IsTouched != true && collision.gameObject.TryGetComponent<MeshCollider>(out _))
         {
             IsTouched = true;
             ChangeColor();
             StartCoroutine(DetermineLifetime());
         }
+    }
+
+    public void ResetCondition()
+    {
+        Rigidbody.velocity = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        _renderer.material.color = _defaultColor;
+        IsTouched = false;
     }
 
     private IEnumerator DetermineLifetime()
@@ -50,14 +59,8 @@ public class Cube : MonoBehaviour
         CubeFallenDown?.Invoke(this);
     }
 
-    public void ChangeColor()
+    private void ChangeColor()
     {
         _renderer.material.color = Random.ColorHSV();
-    }
-
-    public void ResetCondition()
-    {
-        _renderer.material.color = _defaultColor;
-        IsTouched = false;
     }
 }
