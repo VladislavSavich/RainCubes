@@ -5,12 +5,13 @@ using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(BoxCollider))]
 public class Cube : MonoBehaviour
 {
     private Renderer _renderer;
+    private Color _defaultColor = Color.white;
     private int _minimumValueLifetime = 2;
     private int _maximumValueLifetime = 6;
-    private Color DefaultColor = Color.white;
     public BoxCollider Collider { get; private set; }
     public Rigidbody Rigidbody { get; private set; }
     public Color Color { get; private set; }
@@ -27,12 +28,12 @@ public class Cube : MonoBehaviour
     private void Start()
     {
         Rigidbody = GetComponent<Rigidbody>();
-        _renderer.material.color = DefaultColor;
+        _renderer.material.color = _defaultColor;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (IsTouched != true && collision.gameObject.CompareTag("Plane")) 
+        if (IsTouched != true && collision.gameObject.CompareTag("Plane"))
         {
             IsTouched = true;
             ChangeColor();
@@ -40,12 +41,7 @@ public class Cube : MonoBehaviour
         }
     }
 
-    public void ChangeColor()
-    {
-        _renderer.material.color = Random.ColorHSV();
-    }
-
-    private IEnumerator DetermineLifetime() 
+    private IEnumerator DetermineLifetime()
     {
         var wait = new WaitForSeconds(Random.Range(_minimumValueLifetime, _maximumValueLifetime));
 
@@ -54,9 +50,14 @@ public class Cube : MonoBehaviour
         CubeFallenDown?.Invoke(this);
     }
 
+    public void ChangeColor()
+    {
+        _renderer.material.color = Random.ColorHSV();
+    }
+
     public void ResetCondition()
     {
-        _renderer.material.color = DefaultColor;
+        _renderer.material.color = _defaultColor;
         IsTouched = false;
     }
 }

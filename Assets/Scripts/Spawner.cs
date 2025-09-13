@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviour
         maxSize: _poolMaxSize);
     }
 
-    private void ActionOnGet(Cube cube) 
+    private void ActionOnGet(Cube cube)
     {
         cube.transform.position = GenerateRandomPosition();
         cube.gameObject.SetActive(true);
@@ -38,9 +38,9 @@ public class Spawner : MonoBehaviour
         StartCoroutine(SpawnCubes());
     }
 
-    private IEnumerator SpawnCubes() 
+    private IEnumerator SpawnCubes()
     {
-        while (enabled)  
+        while (enabled)
         {
             yield return new WaitForSeconds(_repeatRate);
 
@@ -55,10 +55,10 @@ public class Spawner : MonoBehaviour
     {
         cube.CubeFallenDown -= ReleaseCube;
         _pool.Release(cube);
-        cube.Reset—ondition();
+        cube.ResetCondition();
     }
 
-    private Vector3 GenerateRandomPosition() 
+    private Vector3 GenerateRandomPosition()
     {
         float positionX = Random.Range(_minimumSpawnCoordinates.x, _maximumSpawnCoordinates.x);
         float positionY = Random.Range(_minimumSpawnCoordinates.y, _maximumSpawnCoordinates.y);
